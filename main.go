@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"path"
+	"strings"
 )
 
 const colorCyanBold = "\033[1;36m"
@@ -11,6 +13,7 @@ const colorNone = "\033[0m"
 
 var dirCount int32
 var fileCount int32
+var hiddenFlag *bool
 
 // only path could work
 func tree(basePath string, indent int) {
@@ -31,19 +34,39 @@ func tree(basePath string, indent int) {
 
 		if file.IsDir() {
 			dirCount += 1
-			fmt.Printf("%s%*s\n", colorCyanBold, indent+len(fileName), fileName)
+			formattedPrint(fileName, indent, colorCyanBold)
 			tree(path.Join(basePath, fileName), indent+4)
 		} else {
 			fileCount += 1
-			fmt.Printf("%s%*s\n", colorNone, indent+len(fileName), fileName)
+			formattedPrint(fileName, indent, colorNone)
 		}
 	}
 
 	return
 }
 
+func formattedPrint(fileName string, indent int, color string) {
+	if *hiddenFlag {
+		fmt.Printf("%s%*s\n", color, indent+len(fileName), fileName)
+	} else if !strings.HasPrefix(fileName, ".") {
+		fmt.Printf("%s%*s\n", color, indent+len(fileName), fileName)
+	}
+
+}
+
 func main() {
-	basePath := "/Users/bugraalparlsan/Desktop/tree-example"
+	hiddenFlag = flag.Bool("a", false, "All files are listed.")
+	flag.Parse()
+
+	if len(flag.Args()) == 0 {
+		fmt.Println("No arguments given. Give exactly one directory.")
+		os.Exit(1)
+	}
+	if len(flag.Args()) > 1 {
+		fmt.Println("Too many arguments. Give exactly one directory.")
+		os.Exit(1)
+	}
+	basePath := flag.Args()[0]
 
 	fmt.Printf("%s%s\n", colorCyanBold, basePath)
 	tree(basePath, 4)
