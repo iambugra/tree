@@ -6,6 +6,9 @@ import (
 	"path"
 )
 
+const colorCyanBold = "\033[1;36m"
+const colorNone = "\033[0m"
+
 // only path could work
 func tree(basePath string, indent int) {
 	f, err := os.Open(basePath)
@@ -16,32 +19,27 @@ func tree(basePath string, indent int) {
 
 	fInfo, err := f.Readdir(-1)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error occurred while reading directory:", err)
+		os.Exit(1)
 	}
 
 	for _, file := range fInfo {
 		fileName := file.Name()
-		fmt.Printf("%*s\n", indent+len(fileName), fileName)
 
 		if file.IsDir() {
+			fmt.Printf("%s%*s\n", colorCyanBold, indent+len(fileName), fileName)
 			tree(path.Join(basePath, fileName), indent+4)
+		} else {
+			fmt.Printf("%s%*s\n", colorNone, indent+len(fileName), fileName)
 		}
 	}
 
 	return
-
-	//fileName := fileInfo.Name()
-	//if !fileInfo.IsDir() {
-	//	fmt.Printf("%*s", indent+len(fileName), fileName)
-	//	return
-	//} else {
-	//	fmt.Printf("%*s", indent+len(fileName), fileName)
-	//
-	//}
 }
 
 func main() {
 	basePath := "/Users/bugraalparlsan/Desktop/tree-example"
 
-	tree(basePath, 0)
+	fmt.Printf("%s%s\n", colorCyanBold, basePath)
+	tree(basePath, 4)
 }
