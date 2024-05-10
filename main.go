@@ -8,6 +8,13 @@ import (
 	"strings"
 )
 
+type BoxDrawings struct {
+	upAndRight       string
+	vertical         string
+	horizontal       string
+	verticalAndRight string
+}
+
 const colorCyanBold = "\033[1;36m"
 const colorNone = "\033[0m"
 
@@ -51,7 +58,13 @@ func formattedPrint(fileName string, indent int, color string) {
 	} else if !strings.HasPrefix(fileName, ".") {
 		fmt.Printf("%s%*s\n", color, indent+len(fileName), fileName)
 	}
+}
 
+func setBoxLines(box *BoxDrawings) {
+	box.upAndRight = fmt.Sprintf("%c", 9492)
+	box.vertical = fmt.Sprintf("%c", 9474)
+	box.horizontal = fmt.Sprintf("%c", 9472)
+	box.verticalAndRight = fmt.Sprintf("%c", 9500)
 }
 
 func main() {
