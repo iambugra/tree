@@ -24,6 +24,7 @@ var hiddenFlag *bool
 
 // only path could work
 func tree(basePath string, indent int) {
+func tree(basePath string, indent string) {
 	f, err := os.Open(basePath)
 	if err != nil {
 		panic(err)
@@ -42,7 +43,7 @@ func tree(basePath string, indent int) {
 		if file.IsDir() {
 			dirCount += 1
 			formattedPrint(fileName, indent, colorCyanBold)
-			tree(path.Join(basePath, fileName), indent+4)
+			tree(path.Join(basePath, fileName), indent+"    ")
 		} else {
 			fileCount += 1
 			formattedPrint(fileName, indent, colorNone)
@@ -52,11 +53,11 @@ func tree(basePath string, indent int) {
 	return
 }
 
-func formattedPrint(fileName string, indent int, color string) {
+func formattedPrint(fileName string, indent string, color string) {
 	if *hiddenFlag {
-		fmt.Printf("%s%*s\n", color, indent+len(fileName), fileName)
+		fmt.Printf("%s%s%s\n", color, indent, fileName)
 	} else if !strings.HasPrefix(fileName, ".") {
-		fmt.Printf("%s%*s\n", color, indent+len(fileName), fileName)
+		fmt.Printf("%s%s%s\n", color, indent, fileName)
 	}
 }
 
@@ -82,7 +83,7 @@ func main() {
 	basePath := flag.Args()[0]
 
 	fmt.Printf("%s%s\n", colorCyanBold, basePath)
-	tree(basePath, 4)
+	tree(basePath, "    ")
 
 	fmt.Printf("\n%d directories, %d files\n", dirCount, fileCount)
 }
