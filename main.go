@@ -60,9 +60,9 @@ func tree(basePath string, indent string) {
 		lenIndent := len(indent) / 3 // Every kind of line in boxLines is 3 bytes long.
 		if lenIndent < 3 {
 			modifiedIndent = indent
-		} else if string([]rune(indent)[lenIndent-3]) == boxLines.upAndRight {
+		} else if string([]rune(indent)[lenIndent-3]) == boxLines.upAndRight { // └
 			modifiedIndent = indent[:lenIndent-3] + "   "
-		} else if string([]rune(indent)[lenIndent-3]) == boxLines.verticalAndRight {
+		} else if string([]rune(indent)[lenIndent-3]) == boxLines.verticalAndRight { // ├
 			modifiedIndent = indent[:lenIndent-3] + boxLines.vertical + "  "
 		}
 
