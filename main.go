@@ -57,7 +57,7 @@ func tree(basePath string, indent string) {
 			connectingLine = boxLines.verticalAndRight
 		}
 
-		lenIndent := len(indent) / 3 // Every kind of line in boxLines is 3 bytes long.
+		lenIndent := len([]rune(indent))
 		if lenIndent < 3 {
 			modifiedIndent = indent
 		} else if string([]rune(indent)[lenIndent-3]) == boxLines.upAndRight { // └
