@@ -33,7 +33,7 @@ func tree(basePath string, indent string) {
 
 	fileInfo, err := f.Stat()
 	printLine(fileInfo, indent)
-	if !fileInfo.IsDir() {
+	if !fileInfo.IsDir() || (!*hiddenFlag && strings.HasPrefix(fileInfo.Name(), ".")) {
 		return
 	}
 
