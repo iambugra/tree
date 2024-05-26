@@ -7,7 +7,7 @@ pretty format.
 
 `go run main.go <path>`
 
-Only `-a` flag allowed for now, which lists all files and directories, including hidden
+Only `-a` flag allowed is for now, which lists all files and directories, including hidden
 ones.
 
 ## examples
