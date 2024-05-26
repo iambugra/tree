@@ -5,7 +5,7 @@ pretty format.
 
 ## usage
 
-`go run main.go <optional flags> <path>`
+`go run main.go <path>`
 
 Only `-a` flag allowed for now, which lists all files and directories, including hidden
 ones.
