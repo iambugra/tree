@@ -27,7 +27,7 @@ sample_dir
 ```
 
 ```shell
-go run main.go -a sample_dir
+go run main.go sample_dir
 sample_dir
 ├──how
 │  └──vexingly
